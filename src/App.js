@@ -5,6 +5,9 @@ import { Header } from "./components/Header"
 import { CountriesFilters } from "./components/CountriesFilters"
 import LinearProgress from "@mui/material/LinearProgress"
 import { CountriesList } from "./components/CountriesList"
+import { Layout } from "./components/Layout"
+import { Routes, Route } from "react-router-dom"
+import { ThemeProvider } from "./providers/ThemeProvider"
 
 import "./App.css"
 
@@ -19,6 +22,7 @@ function App() {
         country.region.includes(filter.sortRegion)
       )
     }
+
     return countries
   }, [filter.sortRegion, countries])
 
@@ -42,15 +46,17 @@ function App() {
   }, [])
 
   return (
-    <div className='App'>
-      <Header />
-      <CountriesFilters filter={filter} setFilter={setFilter} />
-      {isLoading ? (
-        <LinearProgress />
-      ) : (
-        <CountriesList countries={sortedandSearchQuery} />
-      )}
-    </div>
+    <ThemeProvider>
+      <Layout>
+        <Header />
+        <CountriesFilters filter={filter} setFilter={setFilter} />
+        {isLoading ? (
+          <LinearProgress />
+        ) : (
+          <CountriesList countries={sortedandSearchQuery} />
+        )}
+      </Layout>
+    </ThemeProvider>
   )
 }
 
